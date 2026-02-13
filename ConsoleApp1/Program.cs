@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq; // library for Min, Max, Sum
 
 namespace HelloWorld {
     class Program
@@ -332,6 +333,142 @@ namespace HelloWorld {
                 Console.WriteLine(i);
                 i++;
             }
+            
+            /* create an array:
+            Arrays are used to store multiple values in a single variable, instead of declaring separate variables for each value.
+            array syntax: dataType[] cars;
+            */
+            
+            string[] brands = {"Volvo", "BMW", "Ford", "Mazda"};
+            // to access a data in array you need to use the index
+            Console.WriteLine("Array named brans in index 0: " + brands[0]);
+            // you can also change the value of an array
+            Console.WriteLine("brand[1] before: " + brands[1]);
+            brands[1] = "Honda";
+            Console.WriteLine("brand[1] now: " + brands[1]);
+            // to check the length of the array you have to use: arrayName.Length
+            Console.WriteLine("Array lenght: " + brands.Length);
+            
+            // Other ways to create arrays
+            /*
+            // Create an array of four elements, and add values later
+               string[] cars = new string[4];
+               
+            // Create an array of four elements and add values right away 
+               string[] cars = new string[4] {"Volvo", "BMW", "Ford", "Mazda"};
+               
+            // Create an array of four elements without specifying the size 
+               string[] cars = new string[] {"Volvo", "BMW", "Ford", "Mazda"};
+               
+            // Create an array of four elements, omitting the new keyword, and without specifying the size
+               string[] cars = {"Volvo", "BMW", "Ford", "Mazda"};
+             */
+            
+            // you should use new for specifying the size of the array, and if you want to allocate the data later
+            /*
+             * int[] numbers;
+               numbers = new int[] { 1, 2, 3, 4, 5 }; // 'new' is required
+               
+             * int[] numbers = new int[5]; // Creates an array of 5 zeros
+             */
+            
+            // you don't need to use 'new' for shorthand array and bracket array (introduced in c# v12)
+            /*
+             * int[] numbers = { 1, 2, 3, 4, 5 }; // Shorthand, 'new' is implicit
+             * var numbers = [1, 2, 3, 4, 5]; // C# 12+ collection expression
+             */
+            
+            // looping through array
+            // for loop
+            for (i = 0; i < brands.Length; i++) {
+                Console.WriteLine(brands[i]);
+            }
+            
+            // there were also foreach loop which is used exclusively for looping through array
+            foreach (string g in cars) {
+                Console.WriteLine(g);
+            }
+            /*
+             * foreach: This keyword initiates the loop, signifying that you want to process every item in a collection.
+               (string i in arrayName): This is the loop declaration part, which specifies:
+               string i: A temporary loop variable named i is declared, with a data type (string) that matches the elements stored in the array.
+               in: This keyword connects the temporary variable to the collection you want to iterate over. It essentially means, "for each item in this collection".
+               arrayName: This is the actual array (or any other object that implements the IEnumerable interface) you are looping through.
+             */
+               
+            // Sorting array in C#
+            // There are many array methods available, for example Sort(), which sorts an array alphabetically or in an ascending order:
+            // alphabetically
+            Array.Sort(brands);
+            foreach (string g in cars)
+            {
+                Console.WriteLine(g);
+            }
+            // ascending order
+            int[] myNumbers = {5, 1, 8, 9};
+            Array.Sort(myNumbers);
+            foreach (int g in myNumbers)
+            {
+                Console.WriteLine(g);
+            }
+            
+            // Using Min, Max, Sum from System.Linq Namespace
+            Console.WriteLine(myNumbers.Max());  // returns the largest value
+            Console.WriteLine(myNumbers.Min());  // returns the smallest value
+            Console.WriteLine(myNumbers.Sum());  // returns the sum of elements
+            
+            // Multi dimentional array
+            // To create a 2D array, add each array within its own set of curly braces, and insert a comma (,) inside the square brackets:
+            int[,] numbers = { {1, 4, 2}, {3, 6, 8} };
+            // To create a 3D array, insert 2 commas (,,) instead of one in 2D array
+            int[,,] arr3D = new int[2, 2, 3] 
+            {
+                // First 2D array (layer 0)
+                { 
+                    { 1, 2, 3 }, // Row 0
+                    { 4, 5, 6 }  // Row 1
+                },
+                // Second 2D array (layer 1)
+                { 
+                    { 7, 8, 9 },   // Row 0
+                    { 10, 11, 12 } // Row 1
+                }
+            };
+            // To access the 2D array
+            Console.WriteLine(numbers[0, 2]);  // Takes 1st row (0) and 3rd column (2) which outputs 2
+            // Same method for the 3D array
+            Console.WriteLine(arr3D[0, 1, 2]);  // Takes 1st layer (0), 2nd row (2), and 3rd column which outputs 2
+            
+            // Changing the value of 2D array
+            numbers[0, 0] = 5;  // Change value of 1st row, 1st column to 5
+            Console.WriteLine(numbers[0, 0]);
+            // Changin the value of 3D array
+            arr3D[0, 0, 0] = 5; // Change value of 1st layer, 1st roe, 1st column to 5
+            
+            // foreach loop for 1D, 2D, and 3D are the same syntax
+            // for loop for 2D array
+            for (int f = 0; f < numbers.GetLength(0); f++) 
+            { 
+                for (int g = 0; g < numbers.GetLength(1); g++) 
+                { 
+                    Console.WriteLine(numbers[f, g]); 
+                } 
+            }  
+            
+            //for loop for 3D array
+            for (int f = 0; f < arr3D.GetLength(0); f++)
+            {
+                for (int g = 0; g < arr3D.GetLength(1); g++)
+                {
+                    for (int h = 0; h < arr3D.GetLength(2); h++)
+                    {
+                        Console.WriteLine(arr3D[f, g, h]);
+                    }
+                }
+            }
+            
+
+
         }
     }
 }
