@@ -4,8 +4,275 @@ using System.Linq; // library for Min, Max, Sum
 namespace HelloWorld {
     class Program
     {
+        // methods: a block of code which only runs when it is called.
+        // to make a method you must define where the method belongs to, what the return value, and the method name
+        // static means method belongs to program class not an object of program class
+        // void means that the method does not have a return value
+        // The best prectice to make a method in c# is by uppercasing the name
+        static void MyMethod()
+        {
+            Console.WriteLine("This is from MyMethod");
+        }
+
+        static void FamName(string fName) // this is how you pass in parameter
+        {
+            Console.WriteLine(fName + "Richard");
+        }
+
+        static void FamContry(string country = "England") // this is how you add default parameter
+        {
+            Console.WriteLine(country);
+        }
+        static void FamAge(string fName, int age) // this is how you add multiple parameter
+        {
+            Console.WriteLine(fName + " is " + age + " years old.");
+        }
+        // you can use int or double instead of void if you want to return value
+        static int MathInt(int inputInt)
+        {
+            return inputInt + 1;
+        }
+
+        static void Child(string child1, string child2, string child3) // you need to explicitly tell the type of parameter even if it's the same type
+        {
+            Console.WriteLine(child1 + child2 + child3);
+        }
+        // Method overloading: method can have the same name as long the type and parameter is different
+        static int PlusMethod(int a, int b)
+        {
+            return a + b;
+        }
+
+        static double PlusMethod(double a, double b)
+        {
+            return a + b;
+        }
+        public static void BitwiseOperation()
+        {
+            int a = 12; // Binary: 00001100
+            int b = 7;  // Binary: 00000111
+        
+            Console.WriteLine($"Initial a: {a} (Binary: {Convert.ToString(a, 2).PadLeft(8, '0')})");
+            Console.WriteLine($"Initial b: {b} (Binary: {Convert.ToString(b, 2).PadLeft(8, '0')})");
+            Console.WriteLine(new string('-', 30));
+
+            // --- Bitwise AND Assignment (&=) ---
+            // check if a bitwise & b bitwise the same ex. a = 12 (1100), b = 7 (0111)
+            // a = 0 and b = 1 result = 0, a = 0 and b = 1 result = 0, a = 1 and b = 1 result = 1, a = 1 and b = 0 result = 0 | the result 4 (0100)
+            // a &= b is equivalent to a = a & b
+            // 00001100 & 00000111 = 00000100 (4 in decimal)
+            int andValue = a;
+            andValue &= b;
+            Console.WriteLine($"AND Assignment (a &= b): {andValue} (Binary: {Convert.ToString(andValue, 2).PadLeft(8, '0')})");
+        
+            // --- Bitwise OR Assignment (|=) ---
+            // check if a bitwise & b bitwise one of it is 1 or true ex. a = 12 (1100), b = 7 (0111)
+            // a = 0 and b = 1 result = 1, a = 0 and b = 1 result = 1, a = 1 and b = 1 result = 1, a = 1 and b = 0 result = 1 | the result 15 (1111)
+            // a |= b is equivalent to a = a | b
+            // 00001100 | 00000111 = 00001111 (15 in decimal)
+            int orValue = a;
+            orValue |= b;
+            Console.WriteLine($"OR Assignment (a |= b): {orValue} (Binary: {Convert.ToString(orValue, 2).PadLeft(8, '0')})");
+        
+            // --- Bitwise XOR Assignment (^=) ---
+            // check if a bitwise & b bitwise one and only one of them the same ex. a = 12 (1100), b = 7 (0111)
+            // a = 0 and b = 1 result = 1, a = 0 and b = 1 result = 1, a = 1 and b = 1 result = 0, a = 1 and b = 0 result = 0 | the result 11 (1011)
+            // a ^= b is equivalent to a = a ^ b
+            // 00001100 ^ 00000111 = 00001011 (11 in decimal)
+            int xorValue = a;
+            xorValue ^= b;
+            Console.WriteLine($"XOR Assignment (a ^= b): {xorValue} (Binary: {Convert.ToString(xorValue, 2).PadLeft(8, '0')})");
+            /* output:
+               Initial a: 12 (Binary: 00001100)
+               Initial b: 7 (Binary: 00000111)
+               ------------------------------
+               AND Assignment (a &= b): 4 (Binary: 00000100)
+               OR Assignment (a |= b): 15 (Binary: 00001111)
+               XOR Assignment (a ^= b): 11 (Binary: 00001011)
+             */
+        }
+        /*
+         * BITWISE OPERATOR CHEAT SHEET:
+         * --------------------------------------------------------------------------
+         * &= (AND Assignment)  : Keeps bit 1 ONLY if both are 1.    (Usage: Masking/Checking)
+         * |= (OR Assignment)   : Sets bit to 1 if either is 1.      (Usage: Combining/Setting)
+         * ^= (XOR Assignment)  : Sets bit to 1 if bits are DIFFERENT. (Usage: Toggling)
+         * << (Left Shift)      : Pushes bits left (adds 0s).        (Usage: Packing/Powers of 2)
+         * >> (Right Shift)     : Pushes bits right (discards end).  (Usage: Unpacking/Extracting)
+         * --------------------------------------------------------------------------
+         */
+        class SecuritySystem
+        {
+            // We use the [Flags] attribute so the console prints "Motion, Camera" 
+            // instead of just "3".
+            [Flags]
+            enum DeviceStatus : byte
+            {
+                None     = 0,
+                Motion   = 1 << 0, // 0001 (1)
+                Camera   = 1 << 1, // 0010 (2)
+                Alarm    = 1 << 2, // 0100 (4)
+                Light    = 1 << 3  // 1000 (8)
+            }
+
+            static void System()
+            {
+                // 1. START: No devices active
+                DeviceStatus system = DeviceStatus.None;
+
+                // 2. OR (|=): Turn on the Motion and Camera sensors
+                system |= DeviceStatus.Motion;
+                system |= DeviceStatus.Camera;
+                Console.WriteLine($"1. System Status: {system}"); 
+
+                // 3. XOR (^=): Toggle the Light (turns it ON because it was OFF)
+                system ^= DeviceStatus.Light;
+                Console.WriteLine($"2. After Toggling Light: {system}");
+
+                // 4. AND (&=): Check if the Alarm is set (Masking)
+                // This checks if the 'Alarm' bit is 1.
+                bool isAlarmSet = (system & DeviceStatus.Alarm) == DeviceStatus.Alarm;
+                Console.WriteLine($"3. Is Alarm Active? {isAlarmSet}"); 
+
+                // 5. PACKING (Left Shift + OR): Store two 4-bit IDs in one byte
+                int zoneA = 10; // 1010
+                int zoneB = 5;  // 0101
+        
+                // Move zoneA to the left 4 times, then "glue" zoneB in
+                int packedData = (zoneA << 4) | zoneB; 
+                Console.WriteLine($"4. Packed Zones (Binary): {Convert.ToString(packedData, 2)}");
+
+                // 6. UNPACKING (Right Shift): Get zoneA back
+                int extractedA = packedData >> 4; 
+                Console.WriteLine($"5. Extracted Zone A ID: {extractedA}"); 
+            }
+        }
+        /*
+         * SWITCH CASE CHEAT SHEET:
+         * --------------------------------------------------------------------------
+         * 1. TRADITIONAL (Statement): Use when you need to perform multiple actions/steps.
+         *    - Requires 'case', 'break', and 'default'.
+         * 2. MODERN (Expression): Use to return a value or assign a variable quickly.
+         *    - Uses '=>' (fat arrow) and '_' (discard/default). Much cleaner.
+         * 3. ADVANCED (Patterns): Uses relational operators (<, >, and, or) or the 'when'
+         *    keyword to handle ranges and complex logic.
+         * --------------------------------------------------------------------------
+         */
+        static void RunSwitch()
+        {
+            // Testing Traditional
+            RunClassicSwitch("Guest");
+
+            // Testing Modern
+            int price = GetPriceModern("Apple");
+            Console.WriteLine($"Price is: {price}");
+
+            // Testing Advanced
+            string feedback = GetTemperatureFeedback(25);
+            Console.WriteLine($"Weather: {feedback}");
+        }
+
+        // 1. TRADITIONAL SWITCH CASE
+        // Best for executing blocks of code.
+        static void RunClassicSwitch(string userRole)
+        {
+            switch (userRole)
+            {
+                case "Admin":
+                    Console.WriteLine("Clearing Logs...");
+                    Console.WriteLine("Admin dashboard loaded.");
+                    break; // Exit the switch
+                case "Editor":
+                    Console.WriteLine("Editor dashboard loaded.");
+                    break;
+                case "Guest":
+                case "Anonymous": // Multiple matches
+                    Console.WriteLine("Standard view loaded.");
+                    break;
+                default:
+                    Console.WriteLine("Error: Unknown Role.");
+                    break;
+            }
+        }
+
+        // 2. MODERN SWITCH EXPRESSION (C# 8+)
+        // Best for "Mapping" one value to another.
+        static int GetPriceModern(string product) => product switch
+        {
+            "Apple"  => 2,
+            "Banana" => 1,
+            "Mango"  => 5,
+            _        => 0 // Default case
+        };
+
+        // 3. ADVANCED SWITCH (Pattern Matching & When Clauses)
+        // Best for ranges and complex conditions.
+        static string GetTemperatureFeedback(int temp) => temp switch
+        {
+            < 0              => "Stay inside, it's freezing!",
+            >= 0 and < 20    => "Wear a jacket.",
+            21 or 22 or 23   => "Room temperature.",
+            >= 24 and <= 35  => "It's quite warm.",
+            > 35 when temp < 50 => "Heatwave warning!", // 'when' adds a specific filter
+            _                => "Extreme conditions."
+        };
+        /*
+         * LOGICAL OPERATOR CHEAT SHEET:
+         * --------------------------------------------------------------------------
+         * && (Logical AND) : True only if both sides are true.
+         * || (Logical OR)  : True if at least one side is true.
+         * !  (Logical NOT) : Reverses the boolean (True -> False).
+         * --------------------------------------------------------------------------
+         */
+        static void RunLogical()
+        {
+            bool hasUsername = true;
+            bool hasPassword = true;
+            bool isBanned = false;
+            bool isAdmin = false;
+
+            // 1. Using AND (&&)
+            // You can only log in if you have BOTH username and password.
+            if (hasUsername && hasPassword)
+            {
+                Console.WriteLine("Credentials provided.");
+            }
+
+            // 2. Using NOT (!)
+            // We check: "If user is NOT banned"
+            if (!isBanned)
+            {
+                Console.WriteLine("User is allowed to attempt login.");
+            }
+
+            // 3. Using OR (||)
+            // Access granted if you are an Admin OR if you are not banned.
+            if (isAdmin || !isBanned)
+            {
+                Console.WriteLine("Access granted to the dashboard.");
+            }
+
+            // 4. Combining them
+            // Complex logic: Must have credentials AND (either be Admin OR not Banned)
+            bool canDeletePost = (hasUsername && hasPassword) && (isAdmin || !isBanned);
+            Console.WriteLine($"Can delete post? {canDeletePost}");
+        }
+
         static void Main(string[] args)
         {
+            MyMethod(); // this is how you call a method
+            FamName("Roberville"); // this is how you pass in argument
+            FamName("Edward");
+            FamAge("Roberville", 21); // this is how you pass in multiple argument
+            FamAge("Edward", 23);
+            FamContry("Russia"); // Russia
+            FamContry(); // England
+            MathInt(14); // output 15
+            Child(child2: "Roberville", child1: "Edward", child3: "Kiana");
+
+            int plusInt = PlusMethod(54, 46); // using the int PlusMethod
+            double plusDouble = PlusMethod(53.25, 46.75); // using the double PlusMethod
+            
             Console.WriteLine("Hello World!"); //this will give output of the line in the console
             Console.WriteLine("I'm new to c#, I am Learning C#"); //Write is used to print the output in the console
             Console.WriteLine("It's mid"); //Line makes a new line after the output
@@ -125,8 +392,7 @@ namespace HelloWorld {
              * Math.Round(), rounds a number to the nearest whole number
              */
 
-            string
-                greeting = "Hello"; //strings: variable contains a collection of characters surrounded by double quotes
+            string greeting = "Hello"; //strings: variable contains a collection of characters surrounded by double quotes
             int textLength = greeting.Length; //returns the length of string variable named greeting
             string upGreeting = greeting.ToUpper(); //Makes string variable named greeting uppercased
             string lowGreeting = greeting.ToLower(); //Makes string variable named greeting lowercased
@@ -466,9 +732,7 @@ namespace HelloWorld {
                     }
                 }
             }
-            
-
-
+            // What to learn next: Classes
         }
     }
 }
