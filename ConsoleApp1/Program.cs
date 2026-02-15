@@ -257,9 +257,27 @@ namespace HelloWorld {
             bool canDeletePost = (hasUsername && hasPassword) && (isAdmin || !isBanned);
             Console.WriteLine($"Can delete post? {canDeletePost}");
         }
-
+        // C# Class and object
+        /*
+         * C# is an object-oriented programming language.
+           Everything in C# is associated with classes and objects, along with its attributes and methods.
+           A Class is like an object constructor, or a "blueprint" for creating objects.
+         */
+        /*
+         * An object is created from a class.
+         * We have already created the class named Car, so now we can use this to create objects.
+           To create an object of Car, specify the class name, followed by the object name, and use the keyword new:
+         */
         static void Main(string[] args)
         {
+            Carl myObjCarl = new Carl();
+            myObjCarl.color = "red";
+            myObjCarl.maxSpeed = 200;
+            Console.WriteLine(myObjCarl.color);
+            Console.WriteLine(myObjCarl.maxSpeed);
+            Car myObj = new Car();
+            Console.WriteLine(myObj.red);
+            Console.WriteLine(myObj.green);
             MyMethod(); // this is how you call a method
             FamName("Roberville"); // this is how you pass in argument
             FamName("Edward");
@@ -732,7 +750,6 @@ namespace HelloWorld {
                     }
                 }
             }
-            // What to learn next: Classes
         }
     }
 }
